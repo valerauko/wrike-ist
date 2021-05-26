@@ -36,5 +36,5 @@
        (.then
         (http/get uri {:headers (headers)})
         (fn [response]
-          (doseq [comment (js->clj (js/JSON.parse (:body response)))]
+          (doseq [comment (get (js->clj (js/JSON.parse (:body response))) "data")]
             (js/console.log comment))))))))
