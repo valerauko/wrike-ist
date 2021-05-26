@@ -18,7 +18,8 @@
     (let [payload (.-payload (.-context github))]
       (if-let [pr (.-pull_request payload)]
         (if-let [details (extract-details pr)]
-          (wrike/link-pr details)
+          (-> (wrike/link-pr details)
+              (.catch #(core/setFailed (.-message %))))
           (js/console.log "Not task link in PR text"))
         (js/console.log "No pull_request in payload")))
     (catch js/Error ex

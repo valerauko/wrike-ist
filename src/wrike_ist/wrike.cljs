@@ -1,7 +1,5 @@
 (ns wrike-ist.wrike
-  (:require [httpurr.client.node :as http]
-            [cljs.core.async :refer [go]]
-            [cljs.core.async.interop :refer-macros [<p!]]))
+  (:require [httpurr.client.node :as http]))
 
 (defn- wrike-token
   []
@@ -10,24 +8,28 @@
 (def link-badge
   "<span style=\"background-color: #966AF0\">Pull request:</span> ")
 
+(defn- headers
+  []
+  {:Authorization (str "bearer " (wrike-token))
+   :Content-Type "application/json"})
+
+(defn task-id
+  [permalink]
+  (let [uri (str "https://www.wrike.com/api/v4/tasks?permalink="
+                 (js/encodeURIComponent permalink))
+        prom (http/get uri {:headers (headers)})]
+    (.then prom (fn [response]
+                  (let [body (js->clj (js/JSON.parse (:body response)))]
+                    (if-let [id (get-in body ["data" 0 "id"])]
+                      (js/Promise.resolve id)
+                      (js/Promise.reject (js/Error. "Task not found"))))))))
+
 (defn link-pr
-  [{:keys [task-id pr-url permalink]}]
-  (go
-   (try
-     (let [headers {:Authorization (str "bearer " (wrike-token))
-                    :Content-Type "application/json"}
-           uri (str "https://www.wrike.com/api/v4/tasks?permalink="
-                    (js/encodeURIComponent permalink))
-           response (<p! (http/get uri {:headers headers}))
-           body (js->clj (js/JSON.parse (:body response)))]
-       (if-let [id (get-in body ["data" 0 "id"])]
-         (let [uri (str "https://www.wrike.com/api/v4/tasks/" id "/comments")
-               params (clj->js {:text (str link-badge pr-url)})
-               response (<p! (http/post uri {:headers headers
-                                             :body (js/JSON.stringify params)}))]
-           (js/console.log (:status response)))
-         (js/console.log body)))
-     (catch js/Error err
-       (js/console.error err)))))
-   ; (str "tasks/" task-id "/comments")))
-   ; {:params {:text (str link-badge pr-url)}}))
+  [{:keys [pr-url permalink]}]
+  (.then
+   (task-id permalink)
+   (fn [id]
+     (let [uri (str "https://www.wrike.com/api/v4/tasks/" id "/comments")
+           params (clj->js {:text (str link-badge pr-url)})]
+       (http/post uri {:headers (headers)
+                       :body (js/JSON.stringify params)})))))
