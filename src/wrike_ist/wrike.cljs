@@ -37,4 +37,4 @@
         (http/get uri {:headers (headers)})
         (fn [response]
           (doseq [comment (js->clj (js/JSON.parse (:body response)))]
-            (js/console.log))))))))
+            (js/console.log comment))))))))
