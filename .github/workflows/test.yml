@@ -16,7 +16,7 @@ jobs:
       - run: |
           npm install
       - run: |
-          npm run
+          npm run start
 
   test:
     runs-on: ubuntu-latest
