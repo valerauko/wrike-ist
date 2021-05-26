@@ -6,7 +6,11 @@
   (some-> js/process .-env .-WRIKE_TOKEN .trim))
 
 (def link-badge
-  "<span style=\"background-color: #966AF0\">Pull request:</span> ")
+  (str "<span class=\"layout_badgeNode\" "
+       "style=\"background-color: rgb(255,204,128); color: rgb(25,25,25);\" "
+       "contenteditable=\"false\">"
+       "Pull request:"
+       "</span> "))
 
 (defn- headers
   []
