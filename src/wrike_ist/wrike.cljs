@@ -13,10 +13,14 @@
 (defn link-pr
   [{:keys [task-id pr-url permalink]}]
   (go
-   (let [response (<p! (http/get "https://wrike.com/api/v4/tasks"
-                                 {:query-params {:permalink permalink}
-                                  :headers {:Authorization
-                                            (str "bearer " (wrike-token))}}))]
-     (js/console.log (:body response)))))
+   (try
+     (let [response (<p! (http/get (str
+                                    "https://wrike.com/api/v4/tasks?permalink="
+                                    (js/encodeURIComponent permalink))
+                                   {:headers {:Authorization
+                                              (str "bearer " (wrike-token))}}))]
+       (js/console.log (:body response)))
+     (catch js/Error err
+       (js/console.error err)))))
    ; (str "tasks/" task-id "/comments")))
    ; {:params {:text (str link-badge pr-url)}}))
