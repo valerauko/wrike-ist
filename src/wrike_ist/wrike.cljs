@@ -29,7 +29,12 @@
    (find-task permalink)
    (fn [{:strs [id]}]
      (js/console.log "link-pr")
-     (let [uri (str "https://www.wrike.com/api/v4/tasks/" id "/comments")
-           params (clj->js {:text (str "[Pull request]: " pr-url)})]
-       (http/post uri {:headers (headers)
-                       :body (js/JSON.stringify params)})))))
+     (let [uri (str "https://www.wrike.com/api/v4/tasks/" id "/comments")]
+       ;     params (clj->js {:text (str "[Pull request]: " pr-url)})]
+       ; (http/post uri {:headers (headers)
+       ;                 :body (js/JSON.stringify params)})))))
+       (.then
+        (http/get uri {:headers (headers)})
+        (fn [response]
+          (doseq [comment (js->clj (js/JSON.parse (:body response)))]
+            (js/console.log))))))))
