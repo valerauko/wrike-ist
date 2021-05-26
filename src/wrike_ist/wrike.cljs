@@ -27,6 +27,7 @@
                                              :body (js/JSON.stringify params)}))]
            (js/console.log (:status response)))))
      (catch js/Error err
+       (js/console.log (str (:body response)))
        (js/console.error err)))))
    ; (str "tasks/" task-id "/comments")))
    ; {:params {:text (str link-badge pr-url)}}))
