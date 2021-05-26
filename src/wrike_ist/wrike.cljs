@@ -14,7 +14,8 @@
   [{:keys [task-id pr-url permalink]}]
   (go
    (try
-     (let [headers {:Authorization (str "bearer " (wrike-token))}
+     (let [headers {:Authorization (str "bearer " (wrike-token))
+                    :Content-Type "application/json"}
            uri (str "https://wrike.com/api/v4/tasks?permalink="
                     (js/encodeURIComponent permalink))
            response (<p! (http/get uri {:headers headers}))
