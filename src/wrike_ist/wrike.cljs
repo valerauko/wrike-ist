@@ -22,12 +22,15 @@
            (js/Promise.resolve task)
            (js/Promise.reject (js/Error. "Task not found"))))))))
 
+(def cnt (atom 0))
+
 (defn link-pr
   [{:keys [pr-url permalink]}]
   (.then
    (find-task permalink)
    (fn [{:strs [id]}]
      (let [uri (str "https://www.wrike.com/api/v4/tasks/" id "/comments")
-           params (clj->js {:text (str "[Pull request]: " pr-url)})]
+           params (clj->js {:text (str "[Pull request]: " pr-url " (" @cnt ")")})]
+       (swap! cnt inc)
        (http/post uri {:headers (headers)
                        :body (js/JSON.stringify params)})))))
