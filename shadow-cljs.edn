@@ -1,5 +1,5 @@
 ;; shadow-cljs configuration
-{:source-paths ["src/cljs"]
+{:source-paths ["src"]
 
  :dependencies [[clj-kondo "2021.04.23"]]
 
