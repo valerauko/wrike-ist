@@ -9,12 +9,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      ACTIONS_RUNNER_DEBUG: true
     steps:
       - uses: actions/checkout@v2
       - run: |
           npm install
       - run: |
-          npm run all
+          npm run
 
   test:
     runs-on: ubuntu-latest
@@ -23,5 +25,3 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./
-        with:
-          milliseconds: 1000
