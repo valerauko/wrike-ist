@@ -10,6 +10,13 @@
   {:Authorization (str "bearer " (wrike-token))
    :Content-Type "application/json"})
 
+(def link-badge
+  (str "<span "
+       "style=\"background-color: rgb(255,204,128); color: rgb(25,25,25);\" "
+       "contenteditable=\"false\">"
+       "Pull request:"
+       "</span> "))
+
 (defn find-task
   [permalink]
   (let [uri (str "https://www.wrike.com/api/v4/tasks?permalink="
@@ -39,6 +46,7 @@
                        (js/Promise.resolve)
                        (get body "data")))))
            (.then (fn [& _]
-                    (let [params (clj->js {:text (str "[Pull request]: " pr-url)})]
+                    (let [params (clj->js {:text (str link-badge pr-url)
+                                           :plainText false})]
                       (http/post uri {:headers (headers)
                                       :body (js/JSON.stringify params)})))))))))
