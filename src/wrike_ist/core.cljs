@@ -1,6 +1,7 @@
 (ns wrike-ist.core
   (:require ["@actions/core" :as core]
-            ["@actions/github" :as github]))
+            ["@actions/github" :as github]
+            [wrike-ist.wrike :as wrike]))
 
 (defn extract-details
   [pr-obj]
@@ -16,7 +17,7 @@
     (let [payload (.-payload (.-context github))]
       (if-let [pr (.-pull_request payload)]
         (if-let [{:keys [task-id pr-url]} (extract-details pr)]
-          (js/console.log (str "Wrike Task to touch: " task-id))
+          (wrike/link-pr task-id pr-url)
           (js/console.log "Not task link in PR text"))
         (js/console.log "No pull_request in payload")))
     (catch js/Error ex
