@@ -13,6 +13,7 @@ function run() {
     const payload = github.context.payload
     if (!payload.pull_request) {
       // this isn't a PR workflow, ignore
+      core.debug('No pull_request in payload')
       core.setOutput('issue', '')
       return
     }
@@ -21,6 +22,7 @@ function run() {
     const taskId = extractTaskId(body)
 
     if (!taskId) {
+      core.debug('No task link in PR text')
       // there was no wrike issue link in the PR body, ignore
       core.setOutput('issue', '')
       return
