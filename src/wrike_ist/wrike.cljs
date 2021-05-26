@@ -16,13 +16,13 @@
    (try
      (let [headers {:Authorization (str "bearer " (wrike-token))
                     :Content-Type "application/json"}
-           uri (str "https://wrike.com/api/v4/tasks?permalink="
+           uri (str "https://www.wrike.com/api/v4/tasks?permalink="
                     (js/encodeURIComponent permalink))
            response (<p! (http/get uri {:headers headers}))
            _ (js/console.log (str (:body response)))
            body (js/JSON.parse (:body response))]
        (when-let [id (get body "id")]
-         (let [uri (str "https://wrike.com/api/v4/tasks/" id "/comments")
+         (let [uri (str "https://www.wrike.com/api/v4/tasks/" id "/comments")
                params (clj->js {:text (str link-badge pr-url)})
                response (<p! (http/post uri {:headers headers
                                              :body (js/JSON.stringify params)}))]
