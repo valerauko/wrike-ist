@@ -20,5 +20,5 @@ jobs:
           path: ~/.m2
           key: maven-${{ hashFiles('shadow-cljs.edn') }}
       - run: yarn
-      - run: yarn release
+      - run: yarn build
       - uses: ./
