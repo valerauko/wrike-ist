@@ -1,7 +1,7 @@
 (ns wrike-ist.wrike
-  (:require-macros [cljs.core.async.macros :refer [go]])
   (:require [httpurr.client.node :as http]
-            [cljs.core.async :refer [<!p]]))
+            [cljs.core.async :refer [go]]
+            [cljs.core.async.interop :refer-macros [<p!]]))
 
 (defn- wrike-token
   []
@@ -13,7 +13,7 @@
 (defn link-pr
   [{:keys [task-id pr-url permalink]}]
   (go
-   (let [response (<!p (http/get "https://wrike.com/api/v4/tasks"
+   (let [response (<p! (http/get "https://wrike.com/api/v4/tasks"
                                  {:query-params {:permalink permalink}
                                   :headers {:Authorization
                                             (str "bearer " (wrike-token))}}))]
