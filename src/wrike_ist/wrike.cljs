@@ -17,8 +17,14 @@
      (let [headers {:Authorization (str "bearer " (wrike-token))}
            uri (str "https://wrike.com/api/v4/tasks?permalink="
                     (js/encodeURIComponent permalink))
-           response (<p! (http/get uri {:headers headers}))]
-       (js/console.log (:body response)))
+           response (<p! (http/get uri {:headers headers}))
+           body (js/JSON.parse (:body response))]
+       (when-let [id (get body "id")]
+         (let [uri (str "https://wrike.com/api/v4/tasks/" id "/comments")
+               params (clj->js {:text (str link-badge pr-url)})
+               response (<p! (http/post uri {:headers headers
+                                             :body (js/JSON.stringify params)}))]
+           (js/console.log (:status response)))))
      (catch js/Error err
        (js/console.error err)))))
    ; (str "tasks/" task-id "/comments")))
