@@ -5,7 +5,7 @@
 
 (defn- wrike-token
   []
-  (.trim (.-WRIKE_TOKEN (.-env js/process))))
+  (some-> js/process .-env .-WRIKE_TOKEN .trim))
 
 (def link-badge
   "<span style=\"background-color: #966AF0\">Pull request:</span> ")
