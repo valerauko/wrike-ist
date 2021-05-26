@@ -5,7 +5,7 @@ const github = require('@actions/github')
 function extractTaskId(text) {
   const matches = text.match(/open\.htm\?id=(\d+)/)
   if (!matches) return
-  return matches['id']
+  return matches[1]
 }
 
 function run() {
