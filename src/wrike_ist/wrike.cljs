@@ -17,7 +17,6 @@
     (.then
      (http/get uri {:headers (headers)})
      (fn [response]
-       (js/console.log "find-task")
        (let [body (js->clj (js/JSON.parse (:body response)))]
          (if-let [task (get-in body ["data" 0])]
            (js/Promise.resolve task)
@@ -28,13 +27,21 @@
   (.then
    (find-task permalink)
    (fn [{:strs [id]}]
-     (js/console.log "link-pr")
      (let [uri (str "https://www.wrike.com/api/v4/tasks/" id "/comments")]
-       ;     params (clj->js {:text (str "[Pull request]: " pr-url)})]
-       ; (http/post uri {:headers (headers)
-       ;                 :body (js/JSON.stringify params)})))))
-       (.then
-        (http/get uri {:headers (headers)})
-        (fn [response]
-          (doseq [comment (get (js->clj (js/JSON.parse (:body response))) "data")]
-            (js/console.log comment))))))))
+       (-> (http/get uri {:headers (headers)})
+           (.then (fn [response]
+                    (let [body (js->clj (js/JSON.parse (:body response)))]
+                      (reduce
+                       (fn [ok comment]
+                         (if (.includes (get comment "text") pr-url)
+                           (reduced (js/Promise.reject :present))
+                           ok))
+                       (js/Promise.resolve)
+                       (get body "data")))))
+           (.then (fn [& _]
+                    (let [params (clj->js {:text (str "[Pull request]: " pr-url)})]
+                      (http/post uri {:headers (headers)
+                                      :body (js/JSON.stringify params)}))))
+           (.catch #(if (= % :present)
+                      (js/console.log "PR link already in comments")
+                      (js/Promise.reject %))))))))
