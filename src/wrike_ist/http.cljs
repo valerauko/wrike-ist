@@ -4,7 +4,7 @@
 
 (defn- wrike-token
   []
-  (.-WRIKE_TOKEN (.-env (js/process))))
+  (.-WRIKE_TOKEN (.-env js/process)))
 
 (defn request
   [method str-url data]
