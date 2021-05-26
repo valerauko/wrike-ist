@@ -1,8 +1,7 @@
 ;; shadow-cljs configuration
 {:source-paths ["src"]
 
- :dependencies [[cljs-ajax "0.7.5"]
-                [clj-kondo "2021.04.23"]]
+ :dependencies [[clj-kondo "2021.04.23"]]
 
  ;; set an nrepl port for connection to a REPL.
  :nrepl {:port 42001}
