@@ -1,0 +1,11 @@
+version: '3'
+services:
+  dev:
+    build: ./docker
+    working_dir: /usr/local/wrikeist
+    volumes:
+      - .:/usr/local/wrikeist
+      - maven:/root/.m2
+
+volumes:
+  maven:
