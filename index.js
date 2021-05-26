@@ -3,7 +3,7 @@ const core = require('@actions/core')
 const github = require('@actions/github')
 
 function extractTaskId(text) {
-  const matches = text.match(/open\.htm\?id=(?<id>\d+)$/)
+  const matches = text.match(/open\.htm\?id=(\d+)/)
   if (!matches) return
   return matches['id']
 }
