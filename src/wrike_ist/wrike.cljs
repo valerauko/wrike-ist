@@ -19,6 +19,7 @@
            uri (str "https://wrike.com/api/v4/tasks?permalink="
                     (js/encodeURIComponent permalink))
            response (<p! (http/get uri {:headers headers}))
+           _ (js/console.log (str (:body response)))
            body (js/JSON.parse (:body response))]
        (when-let [id (get body "id")]
          (let [uri (str "https://wrike.com/api/v4/tasks/" id "/comments")
@@ -27,7 +28,6 @@
                                              :body (js/JSON.stringify params)}))]
            (js/console.log (:status response)))))
      (catch js/Error err
-       (js/console.log (str (:body response)))
        (js/console.error err)))))
    ; (str "tasks/" task-id "/comments")))
    ; {:params {:text (str link-badge pr-url)}}))
