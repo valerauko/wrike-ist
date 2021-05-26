@@ -17,22 +17,23 @@
   {:Authorization (str "bearer " (wrike-token))
    :Content-Type "application/json"})
 
-(defn task-id
+(defn find-task
   [permalink]
   (let [uri (str "https://www.wrike.com/api/v4/tasks?permalink="
-                 (js/encodeURIComponent permalink))
-        prom (http/get uri {:headers (headers)})]
-    (.then prom (fn [response]
-                  (let [body (js->clj (js/JSON.parse (:body response)))]
-                    (if-let [id (get-in body ["data" 0 "id"])]
-                      (js/Promise.resolve id)
-                      (js/Promise.reject (js/Error. "Task not found"))))))))
+                 (js/encodeURIComponent permalink))]
+    (.then
+     (http/get uri {:headers (headers)})
+     (fn [response]
+       (let [body (js->clj (js/JSON.parse (:body response)))]
+         (if-let [task (get-in body ["data" 0])]
+           (js/Promise.resolve task)
+           (js/Promise.reject (js/Error. "Task not found"))))))))
 
 (defn link-pr
   [{:keys [pr-url permalink]}]
   (.then
-   (task-id permalink)
-   (fn [id]
+   (find-task permalink)
+   (fn [{:strs [id ]}]
      (let [uri (str "https://www.wrike.com/api/v4/tasks/" id "/comments")
            params (clj->js {:text (str link-badge pr-url)})]
        (http/post uri {:headers (headers)
