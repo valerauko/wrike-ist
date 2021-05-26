@@ -34,14 +34,11 @@
                       (reduce
                        (fn [ok comment]
                          (if (.includes (get comment "text") pr-url)
-                           (reduced (js/Promise.reject :present))
+                           (reduced (js/Promise.reject ::already-present))
                            ok))
                        (js/Promise.resolve)
                        (get body "data")))))
            (.then (fn [& _]
                     (let [params (clj->js {:text (str "[Pull request]: " pr-url)})]
                       (http/post uri {:headers (headers)
-                                      :body (js/JSON.stringify params)}))))
-           (.catch #(if (= % :present)
-                      (js/console.log "PR link already in comments")
-                      (js/Promise.reject %))))))))
+                                      :body (js/JSON.stringify params)})))))))))

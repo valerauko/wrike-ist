@@ -20,7 +20,9 @@
         (if-let [details (extract-details pr)]
           (-> (wrike/link-pr details)
               (.then #(js/console.log "Successfully linked PR"))
-              (.catch #(core/setFailed (.-message %))))
+              (.catch (fn [error]
+                        (when-not (= error ::wrike/already-present)
+                          (core/setFailed (.-message %))))))
           (js/console.log "Not task link in PR text"))
         (js/console.log "No pull_request in payload")))
     (catch js/Error ex
