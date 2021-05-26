@@ -11,9 +11,10 @@
   (let [url (url/parse str-url)
         opts {:hostname (.-hostname url)
               :path (.-path url)
+              :method method
               :port 443
               :headers {:Content-Type "application/json"
-                        :Authorization (str "bearer " wrike-token)}}
+                        :Authorization (str "bearer " (wrike-token))}}
         request (.request https (clj->js opts) js/console.log)]
     (doto request
           (.on "error" js/console.error)
