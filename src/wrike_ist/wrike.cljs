@@ -5,13 +5,6 @@
   []
   (some-> js/process .-env .-WRIKE_TOKEN .trim))
 
-(def link-badge
-  (str "<span class=\"layout_badgeNode\" "
-       "style=\"background-color: rgb(255,204,128); color: rgb(25,25,25);\" "
-       "contenteditable=\"false\">"
-       "Pull request:"
-       "</span> "))
-
 (defn- headers
   []
   {:Authorization (str "bearer " (wrike-token))
@@ -33,8 +26,8 @@
   [{:keys [pr-url permalink]}]
   (.then
    (find-task permalink)
-   (fn [{:strs [id ]}]
+   (fn [{:strs [id]}]
      (let [uri (str "https://www.wrike.com/api/v4/tasks/" id "/comments")
-           params (clj->js {:text (str link-badge pr-url)})]
+           params (clj->js {:text (str "[Pull request]: " pr-url)})]
        (http/post uri {:headers (headers)
                        :body (js/JSON.stringify params)})))))
