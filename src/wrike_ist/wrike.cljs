@@ -1,7 +1,7 @@
 (ns wrike-ist.wrike
   (:require-macros [cljs.core.async.macros :refer [go]])
-  (:require [cljs-http.client :as http]
-            [cljs.core.async :refer [<!]]))
+  (:require [httpurr.client.node :as http]
+            [cljs.core.async :refer [<!p]]))
 
 (defn- wrike-token
   []
@@ -13,10 +13,10 @@
 (defn link-pr
   [{:keys [task-id pr-url permalink]}]
   (go
-   (let [response (<! (http/get "https://wrike.com/api/v4/tasks"
-                                {:query-params {:permalink permalink}
-                                 :headers {:Authorization
-                                           (str "bearer " (wrike-token))}}))]
+   (let [response (<!p (http/get "https://wrike.com/api/v4/tasks"
+                                 {:query-params {:permalink permalink}
+                                  :headers {:Authorization
+                                            (str "bearer " (wrike-token))}}))]
      (js/console.log (:body response)))))
    ; (str "tasks/" task-id "/comments")))
    ; {:params {:text (str link-badge pr-url)}}))
