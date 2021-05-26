@@ -13,11 +13,12 @@
 (defn main
   []
   (try
-    (some->> (.-context github)
-             (.-payload)
-             (.-pull_request)
-             (extract-details)
-             (js/console.log))
+    (let [payload (.-payload (.-context github))]
+      (if-let [pr (.-pull_request payload)]
+        (if-let [{:keys [task-id pr-url]} (extract-details pr)]
+          (js/console.log (str "Wrike Task to touch: " task-id))
+          (js/console.log "Not task link in PR text"))
+        (js/console.log "No pull_request in payload")))
     (catch js/Error ex
       (core/setFailed (.-message ex)))))
 
