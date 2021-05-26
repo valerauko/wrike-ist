@@ -20,12 +20,13 @@
                     (js/encodeURIComponent permalink))
            response (<p! (http/get uri {:headers headers}))
            body (js->clj (js/JSON.parse (:body response)))]
-       (when-let [id (get-in body ["data" 0 "id"])]
+       (if-let [id (get-in body ["data" 0 "id"])]
          (let [uri (str "https://www.wrike.com/api/v4/tasks/" id "/comments")
                params (clj->js {:text (str link-badge pr-url)})
                response (<p! (http/post uri {:headers headers
                                              :body (js/JSON.stringify params)}))]
-           (js/console.log (:status response)))))
+           (js/console.log (:status response)))
+         (js/console.log body)))
      (catch js/Error err
        (js/console.error err)))))
    ; (str "tasks/" task-id "/comments")))
