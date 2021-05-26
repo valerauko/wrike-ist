@@ -14,14 +14,13 @@
   [{:keys [task-id pr-url permalink]}]
   (go
    (try
-     (let [headers {"Authorization" (str "bearer " (wrike-token))
-                    "Content-Type" "application/json"}
+     (let [headers {:Authorization (str "bearer " (wrike-token))
+                    :Content-Type "application/json"}
            uri (str "https://www.wrike.com/api/v4/tasks?permalink="
                     (js/encodeURIComponent permalink))
            response (<p! (http/get uri {:headers headers}))
-           _ (js/console.log (str (:body response)))
-           body (js/JSON.parse (:body response))]
-       (when-let [id (get body "id")]
+           body (js->clj (js/JSON.parse (:body response)))]
+       (when-let [id (get-in body ["data" 0 "id"])]
          (let [uri (str "https://www.wrike.com/api/v4/tasks/" id "/comments")
                params (clj->js {:text (str link-badge pr-url)})
                response (<p! (http/post uri {:headers headers
