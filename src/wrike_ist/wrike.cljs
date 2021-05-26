@@ -1,12 +1,11 @@
 (ns wrike-ist.wrike
   (:require [httpurr.client.node :as http]
             [cljs.core.async :refer [go]]
-            [cljs.core.async.interop :refer-macros [<p!]]
-            [clojure.string :as str]))
+            [cljs.core.async.interop :refer-macros [<p!]]))
 
 (defn- wrike-token
   []
-  (str/trim (.-WRIKE_TOKEN (.-env js/process))))
+  (.trim (.-WRIKE_TOKEN (.-env js/process))))
 
 (def link-badge
   "<span style=\"background-color: #966AF0\">Pull request:</span> ")
