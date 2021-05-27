@@ -13,16 +13,11 @@
 
 (defn main
   []
-  (try
-    (let [payload (.-payload (.-context github))]
-      (if-let [pr (.-pull_request payload)]
-        (if-let [details (extract-details pr)]
-          (-> (wrike/link-pr details)
-              (.then #(js/console.log "Successfully linked PR"))
-              (.catch (fn [error]
-                        (when-not (= error ::wrike/already-present)
-                          (core/setFailed (.-message %))))))
-          (js/console.log "Not task link in PR text"))
-        (js/console.log "No pull_request in payload")))
-    (catch js/Error ex
-      (core/setFailed (.-message ex)))))
+  (let [payload (.-payload (.-context github))]
+    (js/console.log payload)
+    (if-let [pr (.-pull_request payload)]
+      (if-let [{:keys [merged?] :as details} (extract-details pr)]
+        (-> (wrike/link-pr details)
+            (.catch #(core/setFailed (.-message %))))
+        (js/console.log "Not task link in PR text"))
+      (js/console.log "No pull_request in payload"))))
