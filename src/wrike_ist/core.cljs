@@ -13,7 +13,7 @@
                 ;; (= (.-mergeable_state pr-obj) "draft") :draft
                 :else :open)
        :permalink perm
-       :pr-url ^string (.-html_url pr-obj)})))
+       :pr-url ^String (.-html_url pr-obj)})))
 
 (defn main
   []
