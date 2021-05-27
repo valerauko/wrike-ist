@@ -9,9 +9,9 @@ A GitHub action to make using wrike as a task management tool easier. It does so
 
 ## Pull requests
 
-This Action recognizes that a pull request links to a wrike task, if there is a wrike permalink pointing to a task in the pull request description.
+This Action recognizes that a pull request links to a wrike task, if there is a wrike permalink pointing to a task in the pull request description. It will then post a comment to the task with a link to the pull request, and mark the task as completed when the pull request is merged.
 
-Example:
+### Example:
 
 ```markdown
 ## Task
@@ -26,7 +26,10 @@ Abstracted common functionality into a new interface
 * added generated tests
 ```
 
-This Action will then post a comment to the task with a link to the pull request, and mark the task as completed when the pull request is merged.
+### How to find task permalink
+
+![image](https://user-images.githubusercontent.com/6322484/119765500-56a3c780-beee-11eb-8af6-c2d4085682f2.png)
+
 
 ## Setup
 
