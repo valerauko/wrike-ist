@@ -1,7 +1,8 @@
 name: 'Test'
 on:
-  branches:
-    - feature/*
+  push:
+    branches:
+      - feature/*
 
 jobs:
   build:
