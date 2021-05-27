@@ -3,3 +3,6 @@ description: 'GitHub Action for Wrike automation'
 runs:
   using: 'node12'
   main: 'resources/index.js'
+branding:
+  color: green
+  icon: check-square
