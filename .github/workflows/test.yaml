@@ -1,6 +1,12 @@
 name: 'build-test'
 on:
   pull_request:
+    type:
+      - closed
+      - edited
+      - opened
+      - reopened
+      - synchronize
   push:
     branches:
       - main
