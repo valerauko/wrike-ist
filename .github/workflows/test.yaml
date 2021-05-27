@@ -1,7 +1,8 @@
-name: 'Test'
+name: 'Build and lint'
 on:
-  branches:
-    - feature/*
+  push:
+    branches:
+      - feature/*
 
 jobs:
   build:
@@ -18,3 +19,7 @@ jobs:
           key: maven-${{ hashFiles('shadow-cljs.edn') }}
       - run: yarn
       - run: yarn lint
+      - name: wrike-ist
+        env:
+          WRIKE_TOKEN: ${{ secrets.WRIKE_TOKEN }}
+        uses: ./
