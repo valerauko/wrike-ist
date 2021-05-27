@@ -8,12 +8,12 @@
   (let [body (.-body pr-obj)]
     (when-let [[perm] (re-find #"https://www.wrike.com/open\.htm\?id=(\d+)" body)]
       {:state (cond
-                (.-merged pr-obj) :merged
+                ^boolean (.-merged pr-obj) :merged
                 (= (.-state pr-obj) "closed") :closed
                 ;; (= (.-mergeable_state pr-obj) "draft") :draft
                 :else :open)
        :permalink perm
-       :pr-url (.-html_url pr-obj)})))
+       :pr-url ^string (.-html_url pr-obj)})))
 
 (defn main
   []
