@@ -61,6 +61,6 @@
    (find-task permalink)
    (fn [{:strs [id]}]
      (let [uri (str "https://www.wrike.com/api/v4/tasks/" id)
-           params (clj->js {:status "completed"})]
+           params (clj->js {:status :completed})]
        (http/put uri {:headers (headers)
                       :body (js/JSON.stringify params)})))))
