@@ -15,7 +15,9 @@
     "type": "git",
     "url": "git+https://github.com/valerauko/wrike-ist"
   },
-  "keywords": ["wrike", "task management", "github"],
+  "keywords": [
+    "wrike", "task management", "automation", "pull requests", "issues", "github"
+  ],
   "author": "Balint Erdos <valerauko@gmail.com>",
   "license": "AGPL-3.0-or-later",
   "devDependencies": {
