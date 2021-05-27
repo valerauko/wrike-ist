@@ -7,6 +7,27 @@ A GitHub action to make using wrike as a task management tool easier. It does so
 
 ![wrike-green grass](https://repository-images.githubusercontent.com/370986019/438bfa00-bee4-11eb-86c2-03452b4e91f4)
 
+## Pull requests
+
+This Action recognizes that a pull request links to a wrike task, if there is a wrike permalink pointing to a task in the pull request description.
+
+Example:
+
+```markdown
+## Task
+https://www.wrike.com/open.htm?id=696166643
+
+## What
+Abstracted common functionality into a new interface
+
+## How
+* implemented new interface
+* changed all callsites to use interface
+* added generated tests
+```
+
+This Action will then post a comment to the task with a link to the pull request, and mark the task as completed when the pull request is merged.
+
 ## Setup
 
 Here's a sample workflow:
