@@ -1,0 +1,33 @@
+name: 'build-test'
+on:
+  pull_request:
+    types:
+      - closed
+      - edited
+      - opened
+      - reopened
+      - synchronize
+  push:
+    branches:
+      - main
+      - 'releases/*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node-${{ hashFiles('yarn.lock') }}
+      - uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: maven-${{ hashFiles('shadow-cljs.edn') }}
+      - run: yarn
+      - run: yarn build
+      - name: wrike-ist
+        env:
+          WRIKE_TOKEN: ${{ secrets.WRIKE_TOKEN }}
+        uses: ./

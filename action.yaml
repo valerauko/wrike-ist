@@ -1,0 +1,5 @@
+name: 'wrike-ist'
+description: 'GitHub Action for Wrike automation'
+runs:
+  using: 'node12'
+  main: 'resources/main.js'
