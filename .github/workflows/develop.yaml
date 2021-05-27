@@ -27,12 +27,3 @@ jobs:
         env:
           WRIKE_TOKEN: ${{ secrets.WRIKE_TOKEN }}
         uses: ./
-
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: wrike-ist
-        env:
-          WRIKE_TOKEN: ${{ secrets.WRIKE_TOKEN }}
-        uses: ./
