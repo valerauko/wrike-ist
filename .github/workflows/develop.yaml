@@ -27,3 +27,11 @@ jobs:
         env:
           WRIKE_TOKEN: ${{ secrets.WRIKE_TOKEN }}
         uses: ./
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: wrike-ist
+        env:
+          WRIKE_TOKEN: ${{ secrets.WRIKE_TOKEN }}
+        uses: ./
