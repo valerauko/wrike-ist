@@ -2,8 +2,8 @@
 
 A GitHub action to make using wrike as a task management tool easier. It does some of the convenient things GitHub does for Issues:
 
-* link pull request to issue when the pull request mentions the issue
-* merging a pull request closes the linked issue automatically
+* link pull request to wrike task when the pull request links to the task
+* merging a pull request marks the linked task as completed automatically
 
 ![wrike-green grass](https://repository-images.githubusercontent.com/370986019/438bfa00-bee4-11eb-86c2-03452b4e91f4)
 
@@ -41,4 +41,3 @@ Once you have a token, add it to your repository at Settings > Secrets.
 ## Credit
 
 Cover photo by <a href="https://unsplash.com/@chiklad?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Ochir-Erdene Oyunmedeg</a> on <a href="https://unsplash.com/s/photos/grass?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>.
-  
