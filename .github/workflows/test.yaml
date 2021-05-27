@@ -1,7 +1,7 @@
 name: 'build-test'
 on:
   pull_request:
-    type:
+    types:
       - closed
       - edited
       - opened
