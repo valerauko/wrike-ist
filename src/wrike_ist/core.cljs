@@ -5,12 +5,11 @@
 
 (defn extract-details
   [pr-obj]
-  (let [body (.-body pr-obj)
-        url (.-html_url pr-obj)]
+  (let [body (.-body pr-obj)]
     (when-let [[perm id] (re-find #"https://www.wrike.com/open\.htm\?id=(\d+)" body)]
-      {:task-id id
+      {:merged? (.-merged pr-obj)
        :permalink perm
-       :pr-url url})))
+       :pr-url (.-html_url pr-obj)})))
 
 (defn main
   []
