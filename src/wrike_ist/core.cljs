@@ -6,7 +6,7 @@
 (defn extract-details
   [pr-obj]
   (let [body (.-body pr-obj)]
-    (when-let [[perm id] (re-find #"https://www.wrike.com/open\.htm\?id=(\d+)" body)]
+    (when-let [[perm] (re-find #"https://www.wrike.com/open\.htm\?id=(\d+)" body)]
       {:state (cond
                 (.-merged pr-obj) :merged
                 (= (.-state pr-obj) "closed") :closed
