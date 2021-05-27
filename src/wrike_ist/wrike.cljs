@@ -41,7 +41,7 @@
                       (reduce
                        (fn [ok comment]
                          (if (.includes (get comment "text") pr-url)
-                           (reduced (js/Promise.reject ::already-present))
+                           (reduced (js/Promise.reject :present))
                            ok))
                        (js/Promise.resolve)
                        (get body "data")))))
@@ -49,4 +49,8 @@
                     (let [params (clj->js {:text (str link-badge pr-url)
                                            :plainText false})]
                       (http/post uri {:headers (headers)
-                                      :body (js/JSON.stringify params)})))))))))
+                                      :body (js/JSON.stringify params)}))))
+           (.then #(js/console.log "PR link sent to task"))
+           (.catch #(if (= % :present)
+                      (js/console.log "PR link already in comments")
+                      (js/Promise.reject %))))))))
