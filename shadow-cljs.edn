@@ -8,4 +8,5 @@
  :nrepl {:port 42001}
  :builds {:main {:target :node-script
                  :output-to "resources/main.js"
+                 :output-dir "resources"
                  :main wrike-ist.core/main}}}
