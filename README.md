@@ -62,6 +62,28 @@ Currently this action needs a permanent token as it does not support the wrike O
 
 Once you have a token, add it to your repository at Settings > Secrets.
 
+## Development
+
+```shell
+alias yarn="docker-compose run --rm dev yarn"
+```
+
+The development environment is dockerized so you don't need npm or Java installed locally.
+
+0. clone the source code
+0. install JS dependencies with `yarn`
+0. apply your changes
+0. lint it with `yarn lint`
+
+### Testing
+
+Push to see how Github likes it (set up Github actions in your repo to have it run on a feature/branch).
+
+### Cleaning up
+
+* `yarn clean`
+* `yarn hard-reset`
+
 ## Credit
 
 Cover photo by <a href="https://unsplash.com/@chiklad?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Ochir-Erdene Oyunmedeg</a> on <a href="https://unsplash.com/s/photos/grass?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>.
