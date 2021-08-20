@@ -22,11 +22,16 @@
   (let [uri (str "https://www.wrike.com/api/v4/tasks?permalink="
                  (js/encodeURIComponent permalink))]
     (.then
+     (http/get "https://example.com")
+     #(js/console.log (:body %)))
+    (.then
      (http/get uri {:headers (headers)})
      (fn [response]
        (let [body (js->clj (js/JSON.parse (:body response)))]
          (if-let [task (get-in body ["data" 0])]
-           (js/Promise.resolve task)
+           (do
+             (println task)
+             (js/Promise.resolve task))
            (js/Promise.reject (js/Error. "Task not found"))))))))
 
 (defn link-pr
