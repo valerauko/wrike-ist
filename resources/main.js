@@ -6908,7 +6908,7 @@ function $httpurr$client$node$HttpRequest$$($req$jscomp$3$$) {
 }
 $httpurr$client$node$HttpRequest$$.prototype.$httpurr$protocols$Request$_listen$arity$2$ = function($_$jscomp$242$$, $callback$jscomp$57$$) {
   function $listen$$($target$jscomp$97$$, $event$jscomp$4$$, $cb$jscomp$3$$) {
-    console.log($target$jscomp$97$$);
+    console.log("ClientRequest", $target$jscomp$97$$);
     return $target$jscomp$97$$.$on$($event$jscomp$4$$, $cb$jscomp$3$$);
   }
   $listen$$(this.$req$, "response", function($msg$jscomp$5$$) {
