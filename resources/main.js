@@ -7039,7 +7039,6 @@ function $wrike_ist$wrike$close_task$$($map__8680__$1_p__8679_permalink$jscomp$2
   });
 }
 ;function $wrike_ist$core$extract_details$$($pr_obj$$) {
-  console.log($pr_obj$$);
   var $matches$jscomp$inline_891_perm_temp__5753__auto__$jscomp$37_temp__5753__auto____$1$$ = $pr_obj$$.body;
   if ($cljs$core$truth_$$($matches$jscomp$inline_891_perm_temp__5753__auto__$jscomp$37_temp__5753__auto____$1$$)) {
     var $re$jscomp$inline_890$$ = /https:\/\/www.wrike.com\/open\.htm\?id=(\d+)/;
@@ -7061,18 +7060,18 @@ function $wrike_ist$wrike$close_task$$($map__8680__$1_p__8679_permalink$jscomp$2
   if ($cljs$core$truth_$$($temp__5751__auto__$jscomp$22_temp__5751__auto____$1$jscomp$2$$)) {
     $temp__5751__auto__$jscomp$22_temp__5751__auto____$1$jscomp$2$$ = $wrike_ist$core$extract_details$$($temp__5751__auto__$jscomp$22_temp__5751__auto____$1$jscomp$2$$);
     if ($cljs$core$truth_$$($temp__5751__auto__$jscomp$22_temp__5751__auto____$1$jscomp$2$$)) {
-      var $map__8722__$1$$ = $cljs$core$__destructure_map$$($temp__5751__auto__$jscomp$22_temp__5751__auto____$1$jscomp$2$$), $state$jscomp$16$$ = $cljs$core$get$$.$cljs$core$IFn$_invoke$arity$2$($map__8722__$1$$, $cljs$cst$keyword$state$$);
+      var $map__6555__$1$$ = $cljs$core$__destructure_map$$($temp__5751__auto__$jscomp$22_temp__5751__auto____$1$jscomp$2$$), $state$jscomp$16$$ = $cljs$core$get$$.$cljs$core$IFn$_invoke$arity$2$($map__6555__$1$$, $cljs$cst$keyword$state$$);
       return function() {
         switch($state$jscomp$16$$ instanceof $cljs$core$Keyword$$ ? $state$jscomp$16$$.$fqn$ : null) {
           case "open":
-            return $wrike_ist$wrike$link_pr$$($map__8722__$1$$);
+            return $wrike_ist$wrike$link_pr$$($map__6555__$1$$);
           case "merged":
-            return $wrike_ist$wrike$close_task$$($map__8722__$1$$);
+            return $wrike_ist$wrike$close_task$$($map__6555__$1$$);
           default:
             return Promise.resolve();
         }
-      }().catch(function($p1__8716_SHARP_$$) {
-        return $shadow$js$shim$module$0$0actions$0core$$.setFailed($p1__8716_SHARP_$$.message);
+      }().catch(function($p1__6554_SHARP_$$) {
+        return $shadow$js$shim$module$0$0actions$0core$$.setFailed($p1__6554_SHARP_$$.message);
       });
     }
     return console.log("Not task link in PR text");
