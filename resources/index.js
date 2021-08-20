@@ -13591,18 +13591,19 @@ function $wrike_ist$wrike$close_task$$($map__6557__$1_p__6556_permalink$jscomp$2
   if ($cljs$core$truth_$$($temp__5751__auto__$jscomp$22_temp__5751__auto____$1$jscomp$2$$)) {
     $temp__5751__auto__$jscomp$22_temp__5751__auto____$1$jscomp$2$$ = $wrike_ist$core$extract_details$$($temp__5751__auto__$jscomp$22_temp__5751__auto____$1$jscomp$2$$);
     if ($cljs$core$truth_$$($temp__5751__auto__$jscomp$22_temp__5751__auto____$1$jscomp$2$$)) {
-      var $map__6567__$1$$ = $cljs$core$__destructure_map$$($temp__5751__auto__$jscomp$22_temp__5751__auto____$1$jscomp$2$$), $state$jscomp$16$$ = $cljs$core$get$$.$cljs$core$IFn$_invoke$arity$2$($map__6567__$1$$, $cljs$cst$keyword$state$$);
+      var $map__6554__$1$$ = $cljs$core$__destructure_map$$($temp__5751__auto__$jscomp$22_temp__5751__auto____$1$jscomp$2$$), $state$jscomp$16$$ = $cljs$core$get$$.$cljs$core$IFn$_invoke$arity$2$($map__6554__$1$$, $cljs$cst$keyword$state$$);
       return function() {
         switch($state$jscomp$16$$ instanceof $cljs$core$Keyword$$ ? $state$jscomp$16$$.$fqn$ : null) {
           case "open":
-            return $wrike_ist$wrike$link_pr$$($map__6567__$1$$);
+            return $wrike_ist$wrike$link_pr$$($map__6554__$1$$);
           case "merged":
-            return $wrike_ist$wrike$close_task$$($map__6567__$1$$);
+            return $wrike_ist$wrike$close_task$$($map__6554__$1$$);
           default:
             return Promise.resolve();
         }
-      }().catch(function($p1__6566_SHARP_$$) {
-        return $shadow$js$shim$module$0$0actions$0core$$.setFailed($p1__6566_SHARP_$$.message);
+      }().catch(function($error$jscomp$3$$) {
+        console.trace($error$jscomp$3$$);
+        return $shadow$js$shim$module$0$0actions$0core$$.setFailed($error$jscomp$3$$.message);
       });
     }
     return console.log("Not task link in PR text");

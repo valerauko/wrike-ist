@@ -24,6 +24,9 @@
               :open (wrike/link-pr details)
               :merged (wrike/close-task details)
               (js/Promise.resolve))
-            (.catch #(core/setFailed (.-message %))))
+            (.catch
+             (fn [error]
+               (js/console.trace error)
+               (core/setFailed (.-message error)))))
         (js/console.log "Not task link in PR text"))
       (js/console.log "No pull_request in payload"))))
