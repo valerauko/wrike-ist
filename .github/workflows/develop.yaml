@@ -22,7 +22,7 @@ jobs:
           path: ~/.m2
           key: maven-${{ hashFiles('shadow-cljs.edn') }}
       - run: yarn
-      # - run: yarn release
+      - run: yarn release
       - name: wrike-ist
         env:
           WRIKE_TOKEN: ${{ secrets.WRIKE_TOKEN }}

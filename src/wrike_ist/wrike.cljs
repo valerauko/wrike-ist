@@ -22,9 +22,6 @@
   (let [uri (str "https://www.wrike.com/api/v4/tasks?permalink="
                  (js/encodeURIComponent permalink))]
     (.then
-     (http/get "https://example.com")
-     #(js/console.log (:body %)))
-    (.then
      (http/get uri {:headers (headers)})
      (fn [response]
        (let [body (js->clj (js/JSON.parse (:body response)))]
