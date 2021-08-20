@@ -7,7 +7,7 @@
     "build": "shadow-cljs compile main",
     "lint": "shadow-cljs run clj-kondo.main --lint src",
     "repl": "shadow-cljs node-repl",
-    "release": "shadow-cljs release main && ncc build resources/main.js -o resources",
+    "release": "shadow-cljs release main --debug && ncc build resources/main.js -o resources",
     "clean": "rm -rf target && rm -f resources/main.js",
     "hard-reset": "yarn clean && rm -rf node_modules && rm -f yarn.lock"
   },
