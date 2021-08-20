@@ -21,7 +21,7 @@
   [permalink]
   (let [uri (str "https://www.wrike.com/api/v4/tasks?permalink="
                  (js/encodeURIComponent permalink))]
-    (js/console.log "Why is it empty?" (str "\"" (wrike-token) "\""))
+    (js/console.log "Is it actually empty?" (count (wrike-token)))
     (.then
      (http/get uri {:headers (headers)})
      (fn [response]
