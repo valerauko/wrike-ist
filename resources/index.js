@@ -13511,13 +13511,10 @@ function $wrike_ist$wrike$headers$$() {
 }
 function $wrike_ist$wrike$find_task$$($permalink_uri$jscomp$47$$) {
   $permalink_uri$jscomp$47$$ = ["https://www.wrike.com/api/v4/tasks?permalink\x3d", $cljs$core$str$$.$cljs$core$IFn$_invoke$arity$1$(encodeURIComponent($permalink_uri$jscomp$47$$))].join("");
-  return $httpurr$client$node$get$$($permalink_uri$jscomp$47$$, new $cljs$core$PersistentArrayMap$$(null, 1, [$cljs$cst$keyword$headers$$, $wrike_ist$wrike$headers$$()], null)).then(function($body$jscomp$5_response$jscomp$2_temp__5751__auto__$jscomp$21$$) {
+  return $httpurr$client$node$get$$($permalink_uri$jscomp$47$$).then(function($body$jscomp$5_response$jscomp$2_temp__5751__auto__$jscomp$21$$) {
     $body$jscomp$5_response$jscomp$2_temp__5751__auto__$jscomp$21$$ = $cljs$core$js__GT_clj$cljs$0core$0IFn$0_invoke$0arity$0variadic$$(JSON.parse($cljs$cst$keyword$body$$.$cljs$core$IFn$_invoke$arity$1$($body$jscomp$5_response$jscomp$2_temp__5751__auto__$jscomp$21$$)));
     $body$jscomp$5_response$jscomp$2_temp__5751__auto__$jscomp$21$$ = $cljs$core$reduce$cljs$0core$0IFn$0_invoke$0arity$03$$($cljs$core$get$$, $body$jscomp$5_response$jscomp$2_temp__5751__auto__$jscomp$21$$, new $cljs$core$PersistentVector$$(null, 2, 5, $cljs$core$PersistentVector$EMPTY_NODE$$, ["data", 0], null));
     return $cljs$core$truth_$$($body$jscomp$5_response$jscomp$2_temp__5751__auto__$jscomp$21$$) ? Promise.resolve($body$jscomp$5_response$jscomp$2_temp__5751__auto__$jscomp$21$$) : Promise.reject(Error("Task not found"));
-  }).catch(function($error$jscomp$3$$) {
-    console.log("Failed because of", $error$jscomp$3$$);
-    return console.log(process.env);
   });
 }
 function $wrike_ist$wrike$link_pr$$($map__6554__$1_p__6553_permalink$jscomp$1$$) {
@@ -13535,24 +13532,24 @@ function $wrike_ist$wrike$link_pr$$($map__6554__$1_p__6553_permalink$jscomp$1$$)
       }, Promise.resolve(), $cljs$core$get$$.$cljs$core$IFn$_invoke$arity$2$($body$jscomp$6_response$jscomp$3$$, "data"));
     }).then(function() {
       function $G__6564$jscomp$1$$($var_args$jscomp$358$$) {
-        var $G__6565__i__$jscomp$245$$ = null;
+        var $G__6566__i__$jscomp$245$$ = null;
         if (0 < arguments.length) {
-          $G__6565__i__$jscomp$245$$ = 0;
-          for (var $G__6565__a$$ = Array(arguments.length - 0); $G__6565__i__$jscomp$245$$ < $G__6565__a$$.length;) {
-            $G__6565__a$$[$G__6565__i__$jscomp$245$$] = arguments[$G__6565__i__$jscomp$245$$ + 0], ++$G__6565__i__$jscomp$245$$;
+          $G__6566__i__$jscomp$245$$ = 0;
+          for (var $G__6566__a$$ = Array(arguments.length - 0); $G__6566__i__$jscomp$245$$ < $G__6566__a$$.length;) {
+            $G__6566__a$$[$G__6566__i__$jscomp$245$$] = arguments[$G__6566__i__$jscomp$245$$ + 0], ++$G__6566__i__$jscomp$245$$;
           }
-          $G__6565__i__$jscomp$245$$ = new $cljs$core$IndexedSeq$$($G__6565__a$$, 0, null);
+          $G__6566__i__$jscomp$245$$ = new $cljs$core$IndexedSeq$$($G__6566__a$$, 0, null);
         }
-        return $G__6564__delegate$$.call(this, $G__6565__i__$jscomp$245$$);
+        return $G__6564__delegate$$.call(this, $G__6566__i__$jscomp$245$$);
       }
       function $G__6564__delegate$$() {
         var $params$jscomp$5$$ = $cljs$core$clj__GT_js$$(new $cljs$core$PersistentArrayMap$$(null, 2, [$cljs$cst$keyword$text$$, ['\x3cspan style\x3d"background-color: rgb(255,204,128); color: rgb(25,25,25);" contenteditable\x3d"false"\x3ePull request:\x3c/span\x3e ', $cljs$core$str$$.$cljs$core$IFn$_invoke$arity$1$($pr_url$$)].join(""), $cljs$cst$keyword$plainText$$, !1], null));
         return $httpurr$client$node$post$$($uri$jscomp$48$$, new $cljs$core$PersistentArrayMap$$(null, 2, [$cljs$cst$keyword$headers$$, $wrike_ist$wrike$headers$$(), $cljs$cst$keyword$body$$, JSON.stringify($params$jscomp$5$$)], null));
       }
       $G__6564$jscomp$1$$.$cljs$lang$maxFixedArity$ = 0;
-      $G__6564$jscomp$1$$.$cljs$lang$applyTo$ = function($_$jscomp$246_arglist__6566$$) {
-        $_$jscomp$246_arglist__6566$$ = $cljs$core$seq$$($_$jscomp$246_arglist__6566$$);
-        return $G__6564__delegate$$($_$jscomp$246_arglist__6566$$);
+      $G__6564$jscomp$1$$.$cljs$lang$applyTo$ = function($_$jscomp$246_arglist__6567$$) {
+        $_$jscomp$246_arglist__6567$$ = $cljs$core$seq$$($_$jscomp$246_arglist__6567$$);
+        return $G__6564__delegate$$($_$jscomp$246_arglist__6567$$);
       };
       $G__6564$jscomp$1$$.$cljs$core$IFn$_invoke$arity$variadic$ = $G__6564__delegate$$;
       return $G__6564$jscomp$1$$;
@@ -13606,8 +13603,8 @@ function $wrike_ist$wrike$close_task$$($map__6558__$1_p__6557_permalink$jscomp$2
           default:
             return Promise.resolve();
         }
-      }().catch(function($p1__6567_SHARP_$$) {
-        return $shadow$js$shim$module$0$0actions$0core$$.setFailed($p1__6567_SHARP_$$.message);
+      }().catch(function($p1__6565_SHARP_$$) {
+        return $shadow$js$shim$module$0$0actions$0core$$.setFailed($p1__6565_SHARP_$$.message);
       });
     }
     return console.log("Not task link in PR text");
