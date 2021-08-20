@@ -21,8 +21,7 @@
   [permalink]
   (let [uri (str "https://www.wrike.com/api/v4/tasks?permalink="
                  (js/encodeURIComponent permalink))]
-    (js/console.log "Missing token" (count (.trim (.-WRIKE_TOKEN (.-env js/process)))))
-    (js/console.log "Missing token" (count (wrike-token)))
+    (js/console.log "Missing token" (headers))
     (.then
      (http/get uri {:headers (headers)})
      (fn [response]
