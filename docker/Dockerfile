@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:12
 
 RUN apt-get update && \
     apt-get upgrade --with-new-pkgs -y && \
