@@ -1,7 +1,7 @@
 name: 'wrike-ist'
 description: 'GitHub Action for Wrike automation'
 runs:
-  using: 'node14'
+  using: 'node12'
   main: 'resources/index.js'
 branding:
   color: green
