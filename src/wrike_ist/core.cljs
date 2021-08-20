@@ -5,7 +5,6 @@
 
 (defn extract-details
   [pr-obj]
-  (js/console.log pr-obj)
   (when-let [body (.-body pr-obj)]
     (when-let [[perm] (re-find #"https://www.wrike.com/open\.htm\?id=(\d+)" body)]
       {:state (cond
