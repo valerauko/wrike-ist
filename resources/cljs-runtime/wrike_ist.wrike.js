@@ -5,10 +5,10 @@
 var __webpack_exports__ = {};
 goog.provide('wrike_ist.wrike');
 wrike_ist.wrike.wrike_token = (function wrike_ist$wrike$wrike_token(){
-return "eyJ0dCI6InAiLCJhbGciOiJIUzI1NiIsInR2IjoiMSJ9.eyJkIjoie1wiYVwiOjQ2NzUyMzcsXCJpXCI6Nzg5MDIxNCxcImNcIjo0NjI2NTA5LFwidVwiOjEwNjkyNjcyLFwiclwiOlwiVVNcIixcInNcIjpbXCJXXCIsXCJGXCIsXCJJXCIsXCJVXCIsXCJLXCIsXCJDXCIsXCJEXCIsXCJNXCIsXCJBXCIsXCJMXCIsXCJQXCJdLFwielwiOltdLFwidFwiOjB9IiwiaWF0IjoxNjI5NDM5Mjg0fQ.m724W0Opawx80mItg3f5_T0yWykk68FVlgEW0-_zjl4";
+return process.env.WRIKE_TOKEN.trim();
 });
 wrike_ist.wrike.headers = (function wrike_ist$wrike$headers(){
-return new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"Authorization","Authorization",-1017527462),["bearer ",wrike_ist.wrike.wrike_token()].join(''),new cljs.core.Keyword(null,"Content-Type","Content-Type",-692731875),"application/json"], null);
+return new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"Authorization","Authorization",-1017527462),["bearer ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(wrike_ist.wrike.wrike_token())].join(''),new cljs.core.Keyword(null,"Content-Type","Content-Type",-692731875),"application/json"], null);
 });
 wrike_ist.wrike.link_badge = ["<span ","style=\"background-color: rgb(255,204,128); color: rgb(25,25,25);\" ","contenteditable=\"false\">","Pull request:","</span> "].join('');
 wrike_ist.wrike.find_task = (function wrike_ist$wrike$find_task(permalink){
@@ -57,14 +57,14 @@ return httpurr.client.node.post(uri,new cljs.core.PersistentArrayMap(null, 2, [n
 var G__6564 = function (var_args){
 var _ = null;
 if (arguments.length > 0) {
-var G__6565__i = 0, G__6565__a = new Array(arguments.length -  0);
-while (G__6565__i < G__6565__a.length) {G__6565__a[G__6565__i] = arguments[G__6565__i + 0]; ++G__6565__i;}
-  _ = new cljs.core.IndexedSeq(G__6565__a,0,null);
+var G__6566__i = 0, G__6566__a = new Array(arguments.length -  0);
+while (G__6566__i < G__6566__a.length) {G__6566__a[G__6566__i] = arguments[G__6566__i + 0]; ++G__6566__i;}
+  _ = new cljs.core.IndexedSeq(G__6566__a,0,null);
 } 
 return G__6564__delegate.call(this,_);};
 G__6564.cljs$lang$maxFixedArity = 0;
-G__6564.cljs$lang$applyTo = (function (arglist__6566){
-var _ = cljs.core.seq(arglist__6566);
+G__6564.cljs$lang$applyTo = (function (arglist__6567){
+var _ = cljs.core.seq(arglist__6567);
 return G__6564__delegate(_);
 });
 G__6564.cljs$core$IFn$_invoke$arity$variadic = G__6564__delegate;

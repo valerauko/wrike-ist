@@ -28,10 +28,10 @@ if(cljs.core.truth_(temp__5751__auto__)){
 var pr = temp__5751__auto__;
 var temp__5751__auto____$1 = wrike_ist.core.extract_details(pr);
 if(cljs.core.truth_(temp__5751__auto____$1)){
-var map__6567 = temp__5751__auto____$1;
-var map__6567__$1 = cljs.core.__destructure_map(map__6567);
-var details = map__6567__$1;
-var state = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__6567__$1,new cljs.core.Keyword(null,"state","state",-1988618099));
+var map__6565 = temp__5751__auto____$1;
+var map__6565__$1 = cljs.core.__destructure_map(map__6565);
+var details = map__6565__$1;
+var state = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__6565__$1,new cljs.core.Keyword(null,"state","state",-1988618099));
 return (function (){var G__6568 = state;
 var G__6568__$1 = (((G__6568 instanceof cljs.core.Keyword))?G__6568.fqn:null);
 switch (G__6568__$1) {
