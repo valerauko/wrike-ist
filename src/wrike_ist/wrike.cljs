@@ -72,7 +72,6 @@
                                      (filter #(= (get % "id") id))
                                      first)))))))
         (.then (fn [{statuses "customStatuses"}]
-                 (js/console.log (clj->js statuses))
                  (filter #(= (get % "hidden") false) statuses))))))
 
 (defn next-status
