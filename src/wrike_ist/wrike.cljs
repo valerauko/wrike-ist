@@ -17,6 +17,10 @@
        "Pull request:"
        "</span> "))
 
+(defn parse-body
+  [response]
+  (js->clj (js/JSON.parse (:body response))))
+
 (defn find-task
   [permalink]
   (let [uri (str "https://www.wrike.com/api/v4/tasks?permalink="
@@ -24,10 +28,9 @@
     (.then
      (http/get uri {:headers (headers)})
      (fn [response]
-       (let [body (js->clj (js/JSON.parse (:body response)))]
-         (if-let [task (get-in body ["data" 0])]
+       (if-let [task (get-in (parse-body response) ["data" 0])]
            (js/Promise.resolve task)
-           (js/Promise.reject (js/Error. "Task not found"))))))))
+         (js/Promise.reject (js/Error. "Task not found")))))))
 
 (defn link-pr
   [{:keys [pr-url permalink]}]
@@ -37,14 +40,13 @@
      (let [uri (str "https://www.wrike.com/api/v4/tasks/" id "/comments")]
        (-> (http/get uri {:headers (headers)})
            (.then (fn [response]
-                    (let [body (js->clj (js/JSON.parse (:body response)))]
-                      (reduce
-                       (fn [ok comment]
-                         (if (.includes (get comment "text") pr-url)
-                           (reduced (js/Promise.reject :present))
-                           ok))
-                       (js/Promise.resolve)
-                       (get body "data")))))
+                    (reduce
+                     (fn [ok comment]
+                       (if (.includes (get comment "text") pr-url)
+                         (reduced (js/Promise.reject :present))
+                         ok))
+                     (js/Promise.resolve)
+                     (get (parse-body response) "data"))))
            (.then (fn [& _]
                     (let [params (clj->js {:text (str link-badge pr-url)
                                            :plainText false})]
