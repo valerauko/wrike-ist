@@ -94,7 +94,7 @@
    (fn [{task-id "id" [folder-id] "parentIds"}]
      (.then
       (next-status folder-id)
-      (fn [{:strs [id group] :as status}]
+      (fn [{:strs [id] :as status}]
         (js/console.log (clj->js status))
         (let [uri (str "https://www.wrike.com/api/v4/tasks/" task-id)
               params (clj->js {:customStatus id})]
