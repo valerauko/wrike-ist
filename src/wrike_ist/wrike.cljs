@@ -29,7 +29,7 @@
      (http/get uri {:headers (headers)})
      (fn [response]
        (if-let [task (get-in (parse-body response) ["data" 0])]
-           (js/Promise.resolve task)
+         (js/Promise.resolve task)
          (js/Promise.reject (js/Error. "Task not found")))))))
 
 (defn link-pr
@@ -74,6 +74,20 @@
         (.then (fn [{statuses "customStatuses"}]
                  (js/console.log (clj->js statuses))
                  (filter #(= (get % "hidden") false) statuses))))))
+
+(defn next-status
+  [{[folder-id] "parentIds"}]
+  (.then
+   (folder-statuses folder-id)
+   (fn [statuses]
+     (reduce
+      (fn [_candidate {:strs [group] :as status}]
+        ;; use the first Completed status, or the last one
+        (if (= group "Completed")
+          (reduced status)
+          status))
+      statuses))))
+
 (defn close-task
   [{:keys [permalink]}]
   (.then
