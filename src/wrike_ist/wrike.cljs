@@ -57,6 +57,23 @@
                       (js/console.log "PR link already in comments")
                       (js/Promise.reject %))))))))
 
+(defn folder-statuses
+  [folder-id]
+  (let [uri (str "https://www.wrike.com/api/v4/folders/" folder-id)]
+    (-> (http/get uri {:headers (headers)})
+        (.then parse-body)
+        (.then (fn find-workflow
+                 [{[{id "workflowId"}] "data"}]
+                 (let [uri "https://www.wrike.com/api/v4/workflows"]
+                   (-> (http/get uri {:headers (headers)})
+                       (.then parse-body)
+                       (.then (fn [{workflows "data"}]
+                                (->> workflows
+                                     (filter #(= (get % "id") id))
+                                     first)))))))
+        (.then (fn [{statuses "customStatuses"}]
+                 (js/console.log (clj->js statuses))
+                 (filter #(= (get % "hidden") false) statuses))))))
 (defn close-task
   [{:keys [permalink]}]
   (.then
