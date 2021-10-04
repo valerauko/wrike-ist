@@ -76,7 +76,7 @@
                  (filter #(= (get % "hidden") false) statuses))))))
 
 (defn next-status
-  [{[folder-id] "parentIds"}]
+  [folder-id]
   (.then
    (folder-statuses folder-id)
    (fn [statuses]
@@ -92,7 +92,7 @@
   [{:keys [permalink]}]
   (.then
    (find-task permalink)
-   (fn [{:strs [id]}]
+   (fn [{:strs [id] [folder-id] "parentIds"}]
      (let [uri (str "https://www.wrike.com/api/v4/tasks/" id)
            params (clj->js {:status :completed})]
        (http/put uri {:headers (headers)
