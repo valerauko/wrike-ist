@@ -91,8 +91,12 @@
   [{:keys [permalink]}]
   (.then
    (find-task permalink)
-   (fn [{:strs [id] [folder-id] "parentIds"}]
-     (let [uri (str "https://www.wrike.com/api/v4/tasks/" id)
-           params (clj->js {:status :completed})]
-       (http/put uri {:headers (headers)
-                      :body (js/JSON.stringify params)})))))
+   (fn [{task-id "id" [folder-id] "parentIds"}]
+     (.then
+      (next-status folder-id)
+      (fn [{:strs [id group] :as status}]
+        (js/console.log (clj->js status))
+        (let [uri (str "https://www.wrike.com/api/v4/tasks/" task-id)
+              params (clj->js {:customStatus id})]
+          (http/put uri {:headers (headers)
+                         :body (js/JSON.stringify params)})))))))
