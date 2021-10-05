@@ -95,7 +95,6 @@
      (.then
       (next-status folder-id)
       (fn [{:strs [id] :as status}]
-        (js/console.log (clj->js status))
         (let [uri (str "https://www.wrike.com/api/v4/tasks/" task-id)
               params (clj->js {:customStatus id})]
           (http/put uri {:headers (headers)
