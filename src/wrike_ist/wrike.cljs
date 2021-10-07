@@ -75,27 +75,36 @@
                  (filter #(= (get % "hidden") false) statuses))))))
 
 (defn next-status
-  [folder-id]
+  [folder-id wanted-group]
   (.then
    (folder-statuses folder-id)
    (fn [statuses]
      (reduce
       (fn [_candidate {:strs [group] :as status}]
-        ;; use the first Completed status, or the last one
-        (if (= group "Completed")
+        ;; use the first status in the desired group, or the last one
+        (if (= group wanted-group)
           (reduced status)
           status))
       statuses))))
 
-(defn close-task
+(defn update-task-status
+  [{task-id "id" [folder-id] "parentIds"} wanted-group]
+  (.then
+   (next-status folder-id wanted-group)
+   (fn [{:strs [id]}]
+     (let [uri (str "https://www.wrike.com/api/v4/tasks/" task-id)
+           params (clj->js {:customStatus id})]
+       (http/put uri {:headers (headers)
+                      :body (js/JSON.stringify params)})))))
+
+(defn complete-task
   [{:keys [permalink]}]
   (.then
    (find-task permalink)
-   (fn [{task-id "id" [folder-id] "parentIds"}]
-     (.then
-      (next-status folder-id)
-      (fn [{:strs [id] :as status}]
-        (let [uri (str "https://www.wrike.com/api/v4/tasks/" task-id)
-              params (clj->js {:customStatus id})]
-          (http/put uri {:headers (headers)
-                         :body (js/JSON.stringify params)})))))))
+   #(update-task-status % "Completed")))
+
+(defn cancel-task
+  [{:keys [permalink]}]
+  (.then
+   (find-task permalink)
+   #(update-task-status % "Cancelled")))
