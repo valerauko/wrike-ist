@@ -91,7 +91,7 @@
   [{task-id "id" [folder-id] "parentIds"} wanted-group]
   (.then
    (next-status folder-id wanted-group)
-   (fn [{:strs [id] :as status}]
+   (fn [{:strs [id]}]
      (let [uri (str "https://www.wrike.com/api/v4/tasks/" task-id)
            params (clj->js {:customStatus id})]
        (http/put uri {:headers (headers)
