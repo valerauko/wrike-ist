@@ -1,6 +1,6 @@
 {
   "name": "wrike-ist",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "GitHub Action for Wrike automation",
   "main": "resources/main.js",
   "scripts": {
