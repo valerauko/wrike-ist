@@ -6,3 +6,10 @@ runs:
 branding:
   color: green
   icon: check-square
+inputs:
+  merged:
+    required: false
+    description: Status to move task to when the PR is merged. Defaults to the first Completed status in your workflow.
+  closed:
+    required: false
+    description: Status to move task to when the PR is closed without merging. Defaults to the first Cancelled status in your workflow.

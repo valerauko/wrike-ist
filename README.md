@@ -62,6 +62,22 @@ Currently this action needs a permanent token as it does not support the wrike O
 
 Once you have a token, add it to your repository at Settings > Secrets.
 
+### Inputs
+
+Optionally you can specify (by name) what status you'd want to move the linked task to.
+
+#### `merged`
+
+Specifies the status to move the task to when the linked PR is merged.
+
+If not specified or not found, falls back to the first Completed status in your workflow.
+
+#### `closed`
+
+Specifies the status to move the task to when the linked PR is closed without merging.
+
+If not specified or not found, falls back to the first Cancelled status in your workflow.
+
 ## Development
 
 ```shell

@@ -22,8 +22,8 @@
       (if-let [{:keys [state] :as details} (extract-details pr)]
         (-> (case state
               :open (wrike/link-pr details)
-              :merged (wrike/complete-task details)
-              :closed (wrike/cancel-task details)
+              :merged (wrike/complete-task details (core/getInput "merged"))
+              :closed (wrike/cancel-task details (core/getInput "closed"))
               (js/Promise.resolve))
             (.catch #(core/setFailed (.-message %))))
         (js/console.log "Not task link in PR text"))
