@@ -26,6 +26,7 @@
   (let [uri (str "https://www.wrike.com/api/v4/tasks?fields=[parentIds]"
                  "&permalink=" (js/encodeURIComponent permalink))]
     (.then
+     (js/console.log (str ">" permalink "<"))
      (http/get uri {:headers (headers)})
      (fn [response]
        (if-let [task (get-in (parse-body response) ["data" 0])]
