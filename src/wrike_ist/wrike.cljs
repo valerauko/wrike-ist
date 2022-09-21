@@ -89,6 +89,7 @@
           (if (= (get candidate "group") wanted-group)
             candidate
             status)))
+      {}
       statuses))))
 
 (defn update-task-status
