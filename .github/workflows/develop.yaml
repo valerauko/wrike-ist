@@ -24,6 +24,10 @@ jobs:
       - run: yarn
       - run: yarn release
       - name: wrike-ist
+        with:
+          closed: Icebox
+          merged: Completed
+          open: In review
         env:
           WRIKE_TOKEN: ${{ secrets.WRIKE_TOKEN }}
         uses: ./
