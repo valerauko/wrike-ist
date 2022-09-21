@@ -29,6 +29,7 @@
     (.then
      (http/get uri {:headers (headers)})
      (fn [response]
+       (js/console.log (js/JSON.parse (:body response)))
        (if-let [task (get-in (parse-body response) ["data" 0])]
          (js/Promise.resolve task)
          (js/Promise.reject (js/Error. "Task not found")))))))
