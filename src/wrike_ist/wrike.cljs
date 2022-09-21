@@ -80,7 +80,7 @@
    (folder-statuses folder-id)
    (fn [statuses]
      (reduce
-      (fn [candidate {:strs [name group] :as status}]
+      (fn [candidate {:strs [name] :as status}]
         ;; use the status with the desired name
         ;; or if not found use the first status in the desired group
         ;; or if not found use the last status found
