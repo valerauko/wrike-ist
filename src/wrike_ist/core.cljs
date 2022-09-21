@@ -21,7 +21,10 @@
     (if-let [pr (.-pull_request payload)]
       (if-let [{:keys [state] :as details} (extract-details pr)]
         (-> (case state
-              :open (wrike/link-pr details)
+              :open (js/Promise.all
+                     [(wrike/link-pr details)
+                      (when-let [wanted (not-empty (core/getInput "open"))]
+                        (wrike/open-task details wanted))])
               :merged (wrike/complete-task details (core/getInput "merged"))
               :closed (wrike/cancel-task details (core/getInput "closed"))
               (js/Promise.resolve))

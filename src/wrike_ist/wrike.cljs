@@ -101,6 +101,13 @@
        (http/put uri {:headers (headers)
                       :body (js/JSON.stringify params)})))))
 
+(defn open-task
+  [{:keys [permalink]} wanted-status]
+  (.then
+   (find-task permalink)
+   #(update-task-status % {:wanted-status wanted-status
+                           :wanted-group "Active"})))
+
 (defn complete-task
   [{:keys [permalink]} wanted-status]
   (.then
