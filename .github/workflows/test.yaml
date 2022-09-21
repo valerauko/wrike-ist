@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - feature/*
+      - debug/*
 
 jobs:
   build:
