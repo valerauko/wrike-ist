@@ -22,7 +22,7 @@
   "license": "AGPL-3.0-or-later",
   "devDependencies": {
     "shadow-cljs": "^2.20.2",
-    "@vercel/ncc": "^0.28.6"
+    "@vercel/ncc": "^0.34.0"
   },
   "dependencies": {
     "@actions/core": "^1.10.0",
