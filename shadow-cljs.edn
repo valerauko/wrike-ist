@@ -5,7 +5,7 @@
                 [clj-kondo "2022.09.08"]]
 
  :npm-deps {"@actions/core" "1.10.0"
-            "@actions/github" "1.1.0"
+            "@actions/github" "5.1.0"
             "@octokit/core" "3.4.0"}
 
  ;; set an nrepl port for connection to a REPL.
