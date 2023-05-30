@@ -6,9 +6,10 @@
   "scripts": {
     "build": "shadow-cljs compile main",
     "lint": "shadow-cljs run clj-kondo.main --lint src",
+    "test": "shadow-cljs compile test",
     "repl": "shadow-cljs node-repl",
     "release": "rm -f resources/*.js && shadow-cljs release main && ncc build resources/main.js -o resources",
-    "clean": "rm -rf target && rm -f resources/main.js",
+    "clean": "rm -rf target && rm -f resources/*.js",
     "hard-reset": "yarn clean && rm -rf node_modules && rm -f yarn.lock"
   },
   "repository": {

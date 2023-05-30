@@ -44,6 +44,9 @@ node_modules/
 jspm_packages/
 resources/cljs-runtime
 
+# Test build
+resources/test.js
+
 # TypeScript v1 declaration files
 typings/
 
