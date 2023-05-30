@@ -12,4 +12,9 @@
   (testing "Extract link from payload"
     (let [url "https://www.wrike.com/open.htm?id=1"
           payload (clj->js {:body (str "a\n" url "\nb")})]
-      (is (= url (:permalink (extract-details payload)))))))
+      (is (= url (:permalink (extract-details payload))))))
+  (testing "Extract pull request URL from payload"
+    (let [url "https://github.com/valerauko/wrike-ist/pull/9001"
+          payload (clj->js {:body "https://www.wrike.com/open.htm?id=1"
+                            :html_url url})]
+      (is (= url (:pr-url (extract-details payload)))))))
