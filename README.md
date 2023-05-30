@@ -90,10 +90,10 @@ alias yarn="docker-compose run --rm dev yarn"
 
 The development environment is dockerized so you don't need npm or Java installed locally.
 
-0. clone the source code
-0. install JS dependencies with `yarn`
-0. apply your changes
-0. lint it with `yarn lint`
+1. clone the source code
+1. install JS dependencies with `yarn`
+1. apply your changes
+1. lint it with `yarn lint`
 
 ### Testing
 
