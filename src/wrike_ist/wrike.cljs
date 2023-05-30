@@ -17,6 +17,12 @@
        "Pull request:"
        "</span> "))
 
+(defn link-html
+  [{:keys [pr-url title]}]
+  (if (empty? title)
+    (str link-badge pr-url)
+    (str link-badge "<a href=\"" pr-url "\">" title "</a>")))
+
 (defn parse-body
   [response]
   (js->clj (js/JSON.parse (:body response))))
@@ -33,7 +39,7 @@
          (js/Promise.reject (js/Error. "Task not found")))))))
 
 (defn link-pr
-  [{:keys [pr-url permalink]}]
+  [{:keys [pr-url permalink] :as details}]
   (.then
    (find-task permalink)
    (fn [{:strs [id]}]
@@ -48,7 +54,7 @@
                      (js/Promise.resolve)
                      (get (parse-body response) "data"))))
            (.then (fn add-link-comment [& _]
-                    (let [comment-text (str link-badge pr-url)
+                    (let [comment-text (link-html details)
                           params (clj->js {:text comment-text
                                            :plainText false})]
                       (http/post uri {:headers (headers)
