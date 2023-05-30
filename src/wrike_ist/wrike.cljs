@@ -39,7 +39,7 @@
    (fn [{:strs [id]}]
      (let [uri (str "https://www.wrike.com/api/v4/tasks/" id "/comments")]
        (-> (http/get uri {:headers (headers)})
-           (.then (fn [response]
+           (.then (fn find-existing-link [response]
                     (reduce
                      (fn [ok comment]
                        (if (.includes (get comment "text") pr-url)
@@ -47,7 +47,7 @@
                          ok))
                      (js/Promise.resolve)
                      (get (parse-body response) "data"))))
-           (.then (fn [& _]
+           (.then (fn add-link-comment [& _]
                     (let [params (clj->js {:text (str link-badge pr-url)
                                            :plainText false})]
                       (http/post uri {:headers (headers)
