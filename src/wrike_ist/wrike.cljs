@@ -17,6 +17,12 @@
        "Pull request:"
        "</span> "))
 
+(defn link-html
+  [{:keys [pr-url title]}]
+  (if (empty? title)
+    (str link-badge pr-url)
+    (str link-badge "<a href=\"" pr-url "\">" title "</a>")))
+
 (defn parse-body
   [response]
   (js->clj (js/JSON.parse (:body response))))
@@ -33,13 +39,13 @@
          (js/Promise.reject (js/Error. "Task not found")))))))
 
 (defn link-pr
-  [{:keys [pr-url permalink]}]
+  [{:keys [pr-url permalink] :as details}]
   (.then
    (find-task permalink)
    (fn [{:strs [id]}]
      (let [uri (str "https://www.wrike.com/api/v4/tasks/" id "/comments")]
        (-> (http/get uri {:headers (headers)})
-           (.then (fn [response]
+           (.then (fn find-existing-link [response]
                     (reduce
                      (fn [ok comment]
                        (if (.includes (get comment "text") pr-url)
@@ -47,8 +53,9 @@
                          ok))
                      (js/Promise.resolve)
                      (get (parse-body response) "data"))))
-           (.then (fn [& _]
-                    (let [params (clj->js {:text (str link-badge pr-url)
+           (.then (fn add-link-comment [& _]
+                    (let [comment-text (link-html details)
+                          params (clj->js {:text comment-text
                                            :plainText false})]
                       (http/post uri {:headers (headers)
                                       :body (js/JSON.stringify params)}))))
