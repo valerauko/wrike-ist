@@ -48,7 +48,8 @@
                      (js/Promise.resolve)
                      (get (parse-body response) "data"))))
            (.then (fn add-link-comment [& _]
-                    (let [params (clj->js {:text (str link-badge pr-url)
+                    (let [comment-text (str link-badge pr-url)
+                          params (clj->js {:text comment-text
                                            :plainText false})]
                       (http/post uri {:headers (headers)
                                       :body (js/JSON.stringify params)}))))
