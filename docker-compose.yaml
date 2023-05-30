@@ -3,6 +3,7 @@ services:
   dev:
     build: ./docker
     working_dir: /usr/local/wrikeist
+    env_file: .env
     volumes:
       - .:/usr/local/wrikeist
       - maven:/root/.m2
