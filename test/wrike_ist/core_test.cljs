@@ -17,4 +17,9 @@
     (let [url "https://github.com/valerauko/wrike-ist/pull/9001"
           payload (clj->js {:body "https://www.wrike.com/open.htm?id=1"
                             :html_url url})]
-      (is (= url (:pr-url (extract-details payload)))))))
+      (is (= url (:pr-url (extract-details payload))))))
+  (testing "Extract pull request title from payload"
+    (let [title "hoge"
+          payload (clj->js {:body "https://www.wrike.com/open.htm?id=1"
+                            :title title})]
+      (is (= title (:title (extract-details payload)))))))
