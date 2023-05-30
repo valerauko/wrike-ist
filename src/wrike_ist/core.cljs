@@ -3,6 +3,10 @@
             ["@actions/github" :as github]
             [wrike-ist.wrike :as wrike]))
 
+(defn find-links
+  [text]
+  (not-empty (re-seq #"\bhttps://www\.wrike\.com/open\.htm\?id=\d+\b" text)))
+
 (defn extract-details
   [pr-obj]
   (when-let [body (.-body pr-obj)]

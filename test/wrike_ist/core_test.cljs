@@ -1,6 +1,24 @@
 (ns wrike-ist.core-test
-  (:require [cljs.test :refer-macros [deftest is testing run-tests]]
-            [wrike-ist.core :refer [extract-details]]))
+  (:require [cljs.test :refer-macros [deftest is testing]]
+            [wrike-ist.core :refer [extract-details
+                                    find-links]]))
+
+(deftest links-test
+  (testing "No link in text"
+    (is (= nil (find-links ""))))
+  (testing "One link in text"
+    (let [url "https://www.wrike.com/open.htm?id=1"]
+      (is (= (list url) (find-links (str "a\n" url "\nb"))))))
+  (testing "Multiple links in text"
+    (let [url-1 "https://www.wrike.com/open.htm?id=1"
+          url-2 "https://www.wrike.com/open.htm?id=2"]
+      (is (= (list url-1 url-2) (find-links (str url-1 "\nfoo: " url-2 "\n"))))))
+  (testing "No separator around the link"
+    ;; anything \b matches will do
+    (let [url "https://www.wrike.com/open.htm?id=1"]
+      (is (= nil (find-links (str "1" url))))
+      (is (= nil (find-links (str url "b"))))
+      (is (= nil (find-links (str "1" url "b")))))))
 
 (deftest extract-details-test
   (testing "No .body in payload"
