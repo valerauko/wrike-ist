@@ -19,6 +19,7 @@ jobs:
           key: maven-${{ hashFiles('shadow-cljs.edn') }}
       - run: yarn
       - run: yarn lint
+      - run: yarn test
       - name: wrike-ist
         env:
           WRIKE_TOKEN: ${{ secrets.WRIKE_TOKEN }}
