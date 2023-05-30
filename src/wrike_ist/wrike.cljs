@@ -112,14 +112,18 @@
 
 (defn complete-task
   [{:keys [permalink]} wanted-status]
-  (.then
-   (find-task permalink)
-   #(update-task-status % {:wanted-status wanted-status
-                           :wanted-group "Completed"})))
+  (if-not (= "-" wanted-status)
+    (.then
+     (find-task permalink)
+     #(update-task-status % {:wanted-status wanted-status
+                             :wanted-group "Completed"}))
+    (js/console.log "Skipping `merged` transition because it's set to \"-\"")))
 
 (defn cancel-task
   [{:keys [permalink]} wanted-status]
-  (.then
-   (find-task permalink)
-   #(update-task-status % {:wanted-status wanted-status
-                           :wanted-group "Cancelled"})))
+  (if-not (= "-" wanted-status)
+    (.then
+     (find-task permalink)
+     #(update-task-status % {:wanted-status wanted-status
+                             :wanted-group "Cancelled"}))
+    (js/console.log "Skipping `closed` transition because it's set to \"-\"")))
