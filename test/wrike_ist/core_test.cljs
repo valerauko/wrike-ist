@@ -5,4 +5,7 @@
 (deftest extract-details-test
   (testing "No .body in payload"
     (let [payload (clj->js {})]
+      (is (= nil (extract-details payload)))))
+  (testing "No link in payload"
+    (let [payload (clj->js {:body ""})]
       (is (= nil (extract-details payload))))))
