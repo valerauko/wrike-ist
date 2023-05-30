@@ -22,4 +22,25 @@
     (let [title "hoge"
           payload (clj->js {:body "https://www.wrike.com/open.htm?id=1"
                             :title title})]
-      (is (= title (:title (extract-details payload)))))))
+      (is (= title (:title (extract-details payload))))))
+  (testing "Translating pull request state"
+    (let [payload (clj->js {:body "https://www.wrike.com/open.htm?id=1"
+                            :merged true
+                            :state "closed"})]
+      (is (= :merged (:state (extract-details payload)))))
+    (let [payload (clj->js {:body "https://www.wrike.com/open.htm?id=1"
+                            :merged true})]
+      (is (= :merged (:state (extract-details payload)))))
+    (let [payload (clj->js {:body "https://www.wrike.com/open.htm?id=1"
+                            :merged false
+                            :state "closed"})]
+      (is (= :closed (:state (extract-details payload)))))
+    (let [payload (clj->js {:body "https://www.wrike.com/open.htm?id=1"
+                            :state "closed"})]
+      (is (= :closed (:state (extract-details payload)))))
+    (let [payload (clj->js {:body "https://www.wrike.com/open.htm?id=1"
+                            :merged false
+                            :state "open"})]
+      (is (= :open (:state (extract-details payload)))))
+    (let [payload (clj->js {:body "https://www.wrike.com/open.htm?id=1"})]
+      (is (= :open (:state (extract-details payload)))))))
