@@ -72,11 +72,15 @@ Specifies the status to move the task to when the linked PR is merged.
 
 If not specified or not found, falls back to the first Completed status in your workflow.
 
+The transition can be disabled by setting the `merged` value to `"-"`.
+
 #### `closed`
 
 Specifies the status to move the task to when the linked PR is closed without merging.
 
 If not specified or not found, falls back to the first Cancelled status in your workflow.
+
+The transition can be disabled by setting the `closed` value to `"-"`.
 
 ## Development
 
