@@ -1,5 +1,5 @@
 ;; shadow-cljs configuration
-{:source-paths ["src"]
+{:source-paths ["src" "test"]
 
  :dependencies [[funcool/httpurr "2.0.0"]
                 [clj-kondo "2022.09.08"]]
@@ -14,4 +14,7 @@
                  :compiler-options {:optimizations :simple}
                  :output-to "resources/main.js"
                  :output-dir "resources"
-                 :main wrike-ist.core/main}}}
+                 :main wrike-ist.core/main}
+          :test {:target :node-test
+                 :output-to "resources/test.js"
+                 :autorun true}}}
