@@ -8,4 +8,8 @@
       (is (= nil (extract-details payload)))))
   (testing "No link in payload"
     (let [payload (clj->js {:body ""})]
-      (is (= nil (extract-details payload))))))
+      (is (= nil (extract-details payload)))))
+  (testing "Extract link from payload"
+    (let [url "https://www.wrike.com/open.htm?id=1"
+          payload (clj->js {:body (str "a\n" url "\nb")})]
+      (is (= url (:permalink (extract-details payload)))))))
