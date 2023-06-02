@@ -75,6 +75,12 @@ If not specified or not found, falls back to the first Completed status in your 
 
 The transition can be disabled by setting the `merged` value to `"-"`.
 
+#### `opened`
+
+Specifies the status to move the task to when the linked PR is ready for review (opened or re-opened as ready-for-review, or marked as ready-for-review from draft).
+
+If not specified, does nothing.
+
 #### `closed`
 
 Specifies the status to move the task to when the linked PR is closed without merging.
