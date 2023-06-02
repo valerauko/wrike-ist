@@ -81,24 +81,35 @@
         (.then (fn [{statuses "customStatuses"}]
                  (filter #(= (get % "hidden") false) statuses))))))
 
+(defn find-status
+  [statuses {:keys [wanted-status wanted-group]}]
+  (reduce
+   (fn [{current-group "group" :as candidate} {:strs [name group] :as status}]
+     (if (= name wanted-status)
+       ;; if an exact name match is found, that's it
+       (reduced status)
+       ;; if wanted-group isn't set then only exact name matches are acceptable
+       (when wanted-group
+         (cond
+           ;; if the current candidate is already in the right group use it
+           (= current-group wanted-group)
+           candidate
+
+           ;; else if the new status is in the right group use that
+           (= group wanted-group)
+           status))))
+   nil
+   statuses))
+
 (defn next-status
-  [folder-id {:keys [wanted-status wanted-group]}]
+  ;; {:keys [wanted-status wanted-group] :as opts}
+  [folder-id opts]
   (.then
    (folder-statuses folder-id)
    (fn [statuses]
-     (reduce
-      (fn [candidate {:strs [name] :as status}]
-        ;; use the status with the desired name
-        ;; or if not found use the first status in the desired group
-        ;; or if not found use the last status found
-        (if (= name wanted-status)
-          (reduced status)
-          (if (= (get candidate "group") wanted-group)
-            candidate
-            status)))
-      ;; start with empty so that the very first status can be candidate too
-      {}
-      statuses))))
+     (if-let [match (find-status statuses opts)]
+       match
+       (js/Promise.reject (str "No appropriate status found" opts))))))
 
 (defn update-task-status
   [{task-id "id" [folder-id] "parentIds"} wanted]
