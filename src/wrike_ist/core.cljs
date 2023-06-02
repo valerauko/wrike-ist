@@ -34,6 +34,9 @@
       (loop [links (extract-details pr)]
         (when-let [{:keys [state] :as details} (first links)]
           (-> (case state
+                :draft
+                (wrike/link-pr details)
+
                 :open
                 (js/Promise.all
                  [(wrike/link-pr details)
@@ -45,7 +48,7 @@
                 :closed
                 (wrike/cancel-task details (core/getInput "closed"))
 
-                ;; else ignore :draft
+                ;; else ignore
                 (js/Promise.resolve))
               (.catch #(core/setFailed (.-message %))))
           (recur (rest links))))
