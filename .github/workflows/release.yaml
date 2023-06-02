@@ -14,3 +14,5 @@ jobs:
         env:
           WRIKE_TOKEN: ${{ secrets.WRIKE_TOKEN }}
         uses: ./
+        with:
+          opened: "In review"
