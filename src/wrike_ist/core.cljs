@@ -10,26 +10,33 @@
 (defn extract-details
   [pr-obj]
   (when-let [body (.-body pr-obj)]
-    (when-let [[perm] (find-links body)]
-      {:state (cond
-                ^boolean (.-merged pr-obj) :merged
-                (= (.-state pr-obj) "closed") :closed
-                ;; (= (.-mergeable_state pr-obj) "draft") :draft
-                :else :open)
-       :permalink perm
-       :pr-url ^String (.-html_url pr-obj)
-       :title ^String (.-title pr-obj)})))
+    (when-let [links (find-links body)]
+      (let [state (cond
+                    ^boolean (.-merged pr-obj) :merged
+                    (= (.-state pr-obj) "closed") :closed
+                    ;; (= (.-mergeable_state pr-obj) "draft") :draft
+                    :else :open)
+            url ^String (.-html_url pr-obj)
+            title ^String (.-title pr-obj)]
+        (map
+         (fn [permalink]
+           {:state state
+            :permalink permalink
+            :pr-url url
+            :title title})
+         links)))))
 
 (defn main
   []
   (let [payload (.-payload (.-context github))]
     (if-let [pr (.-pull_request payload)]
-      (if-let [{:keys [state] :as details} (extract-details pr)]
-        (-> (case state
-              :open (wrike/link-pr details)
-              :merged (wrike/complete-task details (core/getInput "merged"))
-              :closed (wrike/cancel-task details (core/getInput "closed"))
-              (js/Promise.resolve))
-            (.catch #(core/setFailed (.-message %))))
-        (js/console.log "Not task link in PR text"))
+      (loop [links (extract-details pr)]
+        (when-let [{:keys [state] :as details} (first links)]
+          (-> (case state
+                :open (wrike/link-pr details)
+                :merged (wrike/complete-task details (core/getInput "merged"))
+                :closed (wrike/cancel-task details (core/getInput "closed"))
+                (js/Promise.resolve))
+              (.catch #(core/setFailed (.-message %))))
+          (recur (rest links))))
       (js/console.log "No pull_request in payload"))))
