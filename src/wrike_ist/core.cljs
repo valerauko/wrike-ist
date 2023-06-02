@@ -15,7 +15,7 @@
       (let [state (cond
                     ^boolean (.-merged pr-obj) :merged
                     (= (.-state pr-obj) "closed") :closed
-                    ;; (= (.-mergeable_state pr-obj) "draft") :draft
+                    ^boolean (.-draft pr-obj) :draft
                     :else :open)
             url ^String (.-html_url pr-obj)
             title ^String (.-title pr-obj)]
@@ -27,12 +27,6 @@
             :title title})
          links)))))
 
-(defn opened?
-  [action]
-  (case action
-    ("opened" "reopened" "ready_for_review") true
-    false))
-
 (defn main
   []
   (let [payload (.-payload (.-context github))]
@@ -43,8 +37,7 @@
                 :open
                 (js/Promise.all
                  [(wrike/link-pr details)
-                  (when (opened? (.-action payload))
-                    (wrike/progress-task details (core/getInput "opened")))])
+                  (wrike/progress-task details (core/getInput "opened"))])
 
                 :merged
                 (wrike/complete-task details (core/getInput "merged"))
@@ -52,7 +45,7 @@
                 :closed
                 (wrike/cancel-task details (core/getInput "closed"))
 
-                ;; else ignore
+                ;; else ignore :draft
                 (js/Promise.resolve))
               (.catch #(core/setFailed (.-message %))))
           (recur (rest links))))
