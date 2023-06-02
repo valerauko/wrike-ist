@@ -121,6 +121,13 @@
        (http/put uri {:headers (headers)
                       :body (js/JSON.stringify params)})))))
 
+(defn progress-task
+  [{:keys [permalink]} wanted-status]
+  (when (not-empty wanted-status)
+    (.then
+     (find-task permalink)
+     #(update-task-status % {:wanted-status wanted-status}))))
+
 (defn complete-task
   [{:keys [permalink]} wanted-status]
   (if-not (= "-" wanted-status)
