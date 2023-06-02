@@ -11,6 +11,7 @@
   [pr-obj]
   (when-let [body (.-body pr-obj)]
     (when-let [links (find-links body)]
+      (js/console.log (js/JSON.stringify pr-obj))
       (let [state (cond
                     ^boolean (.-merged pr-obj) :merged
                     (= (.-state pr-obj) "closed") :closed
