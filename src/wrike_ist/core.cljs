@@ -40,7 +40,7 @@
         (when-let [{:keys [state] :as details} (first links)]
           (-> (case state
                 :open
-                (Promise.all
+                (js/Promise.all
                  [(wrike/link-pr details)
                   (when (opened? (.-action payload))
                     (wrike/progress-task details (core/getInput "opened")))])
