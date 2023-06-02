@@ -26,6 +26,12 @@
             :title title})
          links)))))
 
+(defn opened?
+  [action]
+  (case action
+    ("opened" "reopened" "ready_for_review") true
+    false))
+
 (defn main
   []
   (let [payload (.-payload (.-context github))]
@@ -33,9 +39,19 @@
       (loop [links (extract-details pr)]
         (when-let [{:keys [state] :as details} (first links)]
           (-> (case state
-                :open (wrike/link-pr details)
-                :merged (wrike/complete-task details (core/getInput "merged"))
-                :closed (wrike/cancel-task details (core/getInput "closed"))
+                :open
+                (Promise.all
+                 [(wrike/link-pr details)
+                  (when (opened? (.-action payload))
+                    (wrike/progress-task details (core/getInput "opened")))])
+
+                :merged
+                (wrike/complete-task details (core/getInput "merged"))
+
+                :closed
+                (wrike/cancel-task details (core/getInput "closed"))
+
+                ;; else ignore
                 (js/Promise.resolve))
               (.catch #(core/setFailed (.-message %))))
           (recur (rest links))))
