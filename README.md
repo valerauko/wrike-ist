@@ -45,6 +45,7 @@ on:
       - edited # link in description might be updated
       - opened # yay new pr
       - reopened # someone must've whoops'ed a pr
+      - ready_for_review # a pr is no longer draft
       # - synchronize # new commit to pr
 
 jobs:

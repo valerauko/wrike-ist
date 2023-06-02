@@ -5,6 +5,7 @@ on:
       - closed
       - edited
       - opened
+      - ready_for_review
       - reopened
       - synchronize
 
@@ -27,3 +28,5 @@ jobs:
         env:
           WRIKE_TOKEN: ${{ secrets.WRIKE_TOKEN }}
         uses: ./
+        with:
+          opened: "In review"

@@ -7,6 +7,9 @@ branding:
   color: green
   icon: check-square
 inputs:
+  opened:
+    required: false
+    description: Status to move task to when a PR is (re)opened or marked as ready for review. No action is taken unless specified.
   merged:
     required: false
     description: Status to move task to when the PR is merged. Defaults to the first Completed status in your workflow. Can be disabled by setting it to "-".
