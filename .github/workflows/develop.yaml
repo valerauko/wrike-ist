@@ -5,6 +5,7 @@ on:
       - closed
       - edited
       - opened
+      - ready_for_review
       - reopened
       - synchronize
 
