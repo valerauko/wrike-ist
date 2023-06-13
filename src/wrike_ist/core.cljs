@@ -17,12 +17,14 @@
                     ^boolean (.-draft pr-obj) :draft
                     :else :open)
             url ^String (.-html_url pr-obj)
-            title ^String (.-title pr-obj)]
+            title ^String (.-title pr-obj)
+            id ^long (.-number pr-obj)]
         (map
          (fn [permalink]
            {:state state
             :permalink permalink
             :pr-url url
+            :id id
             :title title})
          links)))))
 
