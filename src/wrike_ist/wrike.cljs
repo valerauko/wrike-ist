@@ -18,10 +18,10 @@
        "</span> "))
 
 (defn link-html
-  [{:keys [pr-url title]}]
+  [{:keys [id pr-url title]}]
   (if (empty? title)
     (str link-badge pr-url)
-    (str link-badge "<a href=\"" pr-url "\">" title "</a>")))
+    (str link-badge "<a href=\"" pr-url "\">" title "(#" id ")""</a>")))
 
 (defn parse-body
   [response]
