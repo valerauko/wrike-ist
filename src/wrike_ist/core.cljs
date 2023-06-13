@@ -9,7 +9,6 @@
 
 (defn extract-details
   [pr-obj]
-  (js/console.log "PR object" (str (js->clj pr-obj)))
   (when-let [body (.-body pr-obj)]
     (when-let [links (find-links body)]
       (let [state (cond
@@ -19,7 +18,7 @@
                     :else :open)
             url ^String (.-html_url pr-obj)
             title ^String (.-title pr-obj)
-            id ^long (.-id pr-obj)]
+            id ^long (.-number pr-obj)]
         (map
          (fn [permalink]
            {:state state
