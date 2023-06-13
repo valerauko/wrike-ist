@@ -9,6 +9,7 @@
 
 (defn extract-details
   [pr-obj]
+  (js/console.log "PR object" (str (js->clj pr-obj)))
   (when-let [body (.-body pr-obj)]
     (when-let [links (find-links body)]
       (let [state (cond
